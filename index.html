@@ -412,6 +412,7 @@
     width: clamp(6rem, 12vw, 10rem);
     height: clamp(6rem, 12vw, 10rem);
     transform: translateY(calc(var(--hero-parallax) * -0.28));
+    z-index: 3;
   }
 
   .moon-glow,
@@ -587,6 +588,11 @@
     color: var(--blush);
     opacity: 0.75;
     padding: 0.2rem;
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     transition: opacity 0.3s ease, transform 0.3s ease;
   }
 
@@ -628,6 +634,7 @@
     opacity: 0.55;
     pointer-events: auto;
     cursor: pointer;
+    z-index: 1;
   }
 
   .constellation line{
@@ -693,6 +700,11 @@
     color: var(--gold);
     opacity: 0.28;
     padding: 0.4rem;
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     transition: opacity 0.35s ease, transform 0.35s ease;
   }
 
@@ -2209,6 +2221,23 @@
     opacity: 1;
     transform: translateY(0);
   }
+
+  .ending-whisper{
+    margin-top: 0.6rem;
+    font-family: 'Crimson Text', serif;
+    font-style: italic;
+    font-size: clamp(0.85rem, 1.6vw, 1rem);
+    letter-spacing: 0.03em;
+    color: #F3E6D2;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 1.8s ease, transform 1.8s ease;
+  }
+
+  .ending-whisper.visible{
+    opacity: 0.75;
+    transform: translateY(0);
+  }
 </style>
 </head>
 <body class="is-loading">
@@ -2263,7 +2292,7 @@
         <div class="eyebrow">out of billions, my story found yours</div>
       </div>
       <h1 class="hero-title typing" id="heroTitle">Happy 2 Months,<br><em>Aarya</em></h1>
-      <p class="hero-sub">Home was never a place. It just took me two months, mau, to notice it was you.</p>
+      <p class="hero-sub">Home was never a place. It just took me two months, Mauu, to notice it was you.</p>
       <p class="heartbeat-message" id="heartbeatMessage">This heart has belonged to you since we became best friends.</p>
       <div class="scroll-hint">scroll ↓</div>
     </div>
@@ -2730,7 +2759,7 @@
       <div class="jar-item" style="transition-delay: 0.18s;">The way you laugh at your own jokes before you finish them.</div>
       <div class="jar-item" style="transition-delay: 0.24s;">Every voice note that made no sense out of context.</div>
       <div class="jar-item" style="transition-delay: 0.3s;">The song you made me listen to twice, just to be sure.</div>
-      <div class="jar-item" style="transition-delay: 0.36s;">Every time autocorrect turned "mauu" into something ridiculous.</div>
+      <div class="jar-item" style="transition-delay: 0.36s;">Every time autocorrect turned "Mauu" into something ridiculous.</div>
       <div class="jar-item" style="transition-delay: 0.42s;">The inside joke neither of us can explain to anyone else.</div>
       <div class="jar-item" style="transition-delay: 0.48s;">Every "wait, tell me that story again."</div>
       <div class="jar-item" style="transition-delay: 0.54s;">The silences that never once felt awkward.</div>
@@ -2738,7 +2767,7 @@
       <div class="jar-item" style="transition-delay: 0.66s;">The times I smiled at my phone for no visible reason.</div>
       <div class="jar-item" style="transition-delay: 0.72s;">Every small argument that ended in an apology and a laugh.</div>
       <div class="jar-item" style="transition-delay: 0.78s;">The way you remember things I mentioned once, in passing.</div>
-      <div class="jar-item" style="transition-delay: 0.84s;">Every "I'm on my way" that made me watch the door.</div>
+      <div class="jar-item" style="transition-delay: 0.84s;">Everytime Vinita came into class and we ran around in panic.</div>
       <div class="jar-item" style="transition-delay: 0.9s;">The conversations that started with nothing and lasted for hours.</div>
       <div class="jar-item" style="transition-delay: 0.96s;">Every "you up?" sent way too late.</div>
       <div class="jar-item" style="transition-delay: 1.02s;">The comfortable quiet of just existing near you.</div>
@@ -2872,6 +2901,7 @@
       <p class="ending-line" id="endingLine1">No matter where life takes us...<br>Thank you for letting me be part of your story.</p>
       <p class="ending-line" id="endingLine2">If I had one wish...<br>I'd wish to meet you again...<br>In every lifetime.</p>
       <div class="ending-signature" id="endingSignature">Forever Yours,<br>Rajdeep ❤️</div>
+      <p class="ending-whisper" id="endingWhisper">Thank you for reading my heart.</p>
     </div>
   </section>
 </div>
@@ -3289,6 +3319,10 @@
         if(entry.isIntersecting && !triggered){
           triggered = true;
           section.classList.add('opened');
+          const whisper = document.getElementById('endingWhisper');
+          if(whisper){
+            setTimeout(() => whisper.classList.add('visible'), 11000);
+          }
           if(audio && !audio.paused){
             const originalVolume = audio.volume;
             const fadeSteps = 20;
